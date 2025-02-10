@@ -1,9 +1,9 @@
 import * as express from "express";
 import * as cors from "cors";
 import * as dotenv from "dotenv";
-import * as multer from "multer";
 import * as marked from "marked";
 import * as fs from "fs";
+import markRouter from "./routes/markdown.route"
 import * as mongoose from "./config/db";
 dotenv.config();
 mongoose;
@@ -17,6 +17,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.json({ massage: "welcome to my markdown note project" });
 });
+
+app.use("/mark" , markRouter)
 
 app.listen(port, () => {
   console.log(`server running on http://localhost${port}`);
