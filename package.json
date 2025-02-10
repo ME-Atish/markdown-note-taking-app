@@ -17,12 +17,13 @@
   "license": "MIT",
   "description": "",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "multer": "1.4.5-lts.1",
     "nodemon": "^3.1.9",
     "typescript": "^5.7.3"
   },
   "contributes": {
-    "name" : "Mohammad Erfan Atashrou",
-    "email" :"meatish2008@gmail.com"
+    "name": "Mohammad Erfan Atashrou",
+    "email": "meatish2008@gmail.com"
   }
 }
