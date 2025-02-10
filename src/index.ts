@@ -1,1 +1,2 @@
-console.log("let's go")
+import * as mongoose from "./config/db"
+mongoose

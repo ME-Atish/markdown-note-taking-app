@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node dist/index.js",
+    "build" :"npx index.ts",
+    "dev" :"nodemon"
+  },
   "keywords": [],
   "author": "Mohammad Erfan Atashrou <meatish2008@gmail.com>",
   "license": "MIT",
