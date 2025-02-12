@@ -2,10 +2,10 @@
   "name": "markdown-note-taking-app",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "build" :"npx index.ts",
+    "build" :"npx tsc",
     "dev" :"nodemon"
   },
   "keywords": [],

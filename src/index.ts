@@ -1,8 +1,6 @@
 import * as express from "express";
 import * as cors from "cors";
 import * as dotenv from "dotenv";
-import * as marked from "marked";
-import * as fs from "fs";
 import markRouter from "./routes/markdown.route"
 import * as mongoose from "./config/db";
 dotenv.config();

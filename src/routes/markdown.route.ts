@@ -1,8 +1,7 @@
-import * as express from "express"
-import{upload} from "../controller/mark.controller"
-const router = express.Router()
+import * as express from "express";
+import { upload, read } from "../controller/mark.controller";
+const router = express.Router();
 
-router.post("/" ,upload )
-
-
-export default router
+router.post("/" , upload)
+router.get("/", read);
+export default router;
