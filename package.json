@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "build" :"npx tsc",
-    "dev" :"nodemon"
+    "build": "npx tsc",
+    "dev": "nodemon"
   },
   "keywords": [],
   "author": "Mohammad Erfan Atashrou <meatish2008@gmail.com>",
