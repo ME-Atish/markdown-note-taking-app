@@ -15,14 +15,29 @@ export const upload = async (req: Request, res: Response) => {
       .status(200)
       .json({ message: "Files uploaded successfully!", files: req.files });
   });
-
 };
 
 export const read = async (req: Request, res: Response) => {
-  fs.readFile(storageFile, "utf-8", (err, date) => {
-    if (err) console.log(err);
+  const storagePath = path.join(__dirname, "../uploads/");
 
-    console.log(date);
+  fs.readdir(storagePath, (err, files) => {
+    if (err) {
+      console.error("Error reading directory:", err);
+      return res.status(500).json({ error: "Error reading directory" });
+    }
+
+    const fileContents = files.map((file) => {
+      const filePath = path.join(storagePath, file);
+      try {
+        const content = fs.readFileSync(filePath, "utf-8"); // Read file content
+        return { name: file, content };
+      } catch (readErr) {
+        console.error("Error reading file:", file, readErr);
+        return { name: file, error: "Could not read file" };
+      }
+    });
+
+    res.json({ files: fileContents });
   });
-  res.send("ok");
+
 };
