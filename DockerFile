@@ -1,0 +1,13 @@
+FROM node:22.14.0-alpine
+
+WORKDIR /Docker
+
+COPY .package.json .
+
+RUN npm i pnpm
+
+COPY . .
+
+RUN pnpm build
+
+CMD [ "node" , "dist/index.js" ]
