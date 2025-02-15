@@ -11,8 +11,8 @@ A feature-rich and user-friendly web application for creating, managing, and sto
 
 ## 🛠 Tech Stack
 - **Backend:** Node.js, Express  
-- **Frontend:** HTML, CSS, JavaScript  
-- **Database:** MongoDB (or file-based storage)  
+- **Frontend:** HTML, CSS  
+- **Database:** file-based storage
 - **Markdown Rendering:** [Marked.js](https://github.com/markedjs/marked)  
 
 ## 📦 Installation
