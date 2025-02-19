@@ -3,6 +3,7 @@ import uploader from "../middlewares/multer";
 import * as path from "path";
 import * as fs from "fs";
 import { URLSearchParams } from "url";
+import { marked } from "marked"; // Import marked for Markdown rendering
 
 const uploadFile = uploader.array("file", 12);
 const storageFile = path.join(__dirname, "../uploads/");
@@ -20,13 +21,11 @@ export const upload = async (req: Request, res: Response) => {
 
 export const read = async (req: Request, res: Response) => {
   const storagePath = path.join(__dirname, "../uploads/");
-
   fs.readdir(storagePath, (err, files) => {
     if (err) {
       console.error("Error reading directory:", err);
       return res.status(500).json({ error: "Error reading directory" });
     }
-
     const fileContents = files.map((file) => {
       const filePath = path.join(storagePath, file);
       try {
@@ -37,7 +36,6 @@ export const read = async (req: Request, res: Response) => {
         return { name: file, error: "Could not read file" };
       }
     });
-
     res.json({ files: fileContents });
   });
 };
@@ -47,13 +45,11 @@ export const grammar = async (req: Request, res: Response) => {
     if (err) {
       return res.status(400).json({ err: "Failed to read directory" });
     }
-
-    try {      
+    try {
       const grammarCheckResults = await Promise.all(
         files.map(async (file) => {
           const filePath = path.join(storageFile, file);
           const content = fs.readFileSync(filePath, "utf-8");
-
           const response = await fetch(
             "https://api.languagetool.org/v2/check",
             {
@@ -67,15 +63,46 @@ export const grammar = async (req: Request, res: Response) => {
               }),
             }
           );
-          
-          const data = await response.json();          
-          return { correction: data.matches };
+          const data = await response.json();
+          return { file, correction: data.matches };
         })
       );
-
       res.json(grammarCheckResults);
     } catch (error) {
       res.status(400).json({ err: "Grammar check failed" });
     }
   });
+};
+
+// Retrieve a specific note by filename
+export const getNote = async (req: Request, res: Response) => {
+  const { filename } = req.params;
+  const filePath = path.join(storageFile, filename);
+  if (!fs.existsSync(filePath)) {
+    res.status(404).json({ error: "Note not found" });
+    return;
+  }
+  try {
+    const content = fs.readFileSync(filePath, "utf-8");
+    res.json({ name: filename, content });
+  } catch (error) {
+    res.status(500).json({ error: "Error reading the note" });
+  }
+};
+
+// Render Markdown file as HTML
+export const renderMarkdown = async (req: Request, res: Response) => {
+  const { filename } = req.params;
+  const filePath = path.join(storageFile, filename);
+  if (!fs.existsSync(filePath)) {
+    res.status(404).json({ error: "Note not found" });
+    return;
+  }
+  try {
+    const content = fs.readFileSync(filePath, "utf-8");
+    const html = marked(content);
+    res.send(html); // Sends the rendered HTML
+  } catch (error) {
+    res.status(500).json({ error: "Error rendering markdown" });
+  }
 };
