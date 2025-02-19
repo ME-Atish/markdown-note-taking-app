@@ -16,23 +16,17 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const timestamp = Date.now();
     const ext = path.extname(file.originalname);
-    cb(null, `${timestamp}${ext}`);
+    cb(null, `${file.fieldname}-${timestamp}${ext}`);
   },
 });
 
-// Filter to allow only `.md` files
-const fileFilter = (req: any, file: Express.Multer.File, cb: any) => {
-  const ext = path.extname(file.originalname).toLowerCase();
-  if (ext === ".md") {
-    cb(null, true); // Accept the file
+// File filter to allow only Markdown files
+const fileFilter = (req: any, file: any, cb: any) => {
+  if (path.extname(file.originalname).toLowerCase() === ".md") {
+    cb(null, true);
   } else {
-    cb(new Error("Only .md files are allowed"), false); // Reject the file
+    cb(new Error("Only Markdown (.md) files are allowed"), false);
   }
 };
 
-const upload = multer({
-  storage,
-  fileFilter,
-});
-
-export default upload;
+export default multer({ storage, fileFilter });
