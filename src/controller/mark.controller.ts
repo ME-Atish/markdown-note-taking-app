@@ -79,7 +79,8 @@ export const getNote = async (req: Request, res: Response) => {
   const { filename } = req.params;
   const filePath = path.join(storageFile, filename);
   if (!fs.existsSync(filePath)) {
-    return res.status(404).json({ error: "Note not found" });
+    res.status(404).json({ error: "Note not found" });
+    return;
   }
   try {
     const content = fs.readFileSync(filePath, "utf-8");
@@ -94,7 +95,8 @@ export const renderMarkdown = async (req: Request, res: Response) => {
   const { filename } = req.params;
   const filePath = path.join(storageFile, filename);
   if (!fs.existsSync(filePath)) {
-    return res.status(404).json({ error: "Note not found" });
+    res.status(404).json({ error: "Note not found" });
+    return;
   }
   try {
     const content = fs.readFileSync(filePath, "utf-8");
