@@ -20,3 +20,5 @@ A feature-rich and user-friendly web application for creating, managing, and sto
    ```bash
    git clone https://github.com/ME-Atish/markdown-note-taking-app.git
    cd markdown-note-taking-app
+## Roadmap link
+- https://roadmap.sh/projects/markdown-note-taking-app
